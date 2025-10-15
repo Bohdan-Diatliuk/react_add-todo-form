@@ -4,22 +4,21 @@ import usersFromServer from './api/users';
 import todosFromServer from './api/todos';
 import { UsersAndTodos } from './types/UsersAndTodos';
 import { TodoList } from './components/TodoList';
-// import { TodoList } from './components/TodoList';
 
 const users = usersFromServer;
 const todos = todosFromServer;
 
 const todosWithUsers: UsersAndTodos[] = todos.map(todo => ({
   ...todo,
-  users: users.find(user => user.id === todo.userId)!,
+  user: users.find(user => user.id === todo.userId)!,
 }));
 
 export const App = () => {
   const [todosState, setTodosState] = useState<UsersAndTodos[]>(todosWithUsers);
   const [title, setTitle] = useState('');
   const [userId, setUserId] = useState(0);
-  const [titleError, setTitleError] = useState(false);
-  const [userError, setUserError] = useState(false);
+  const [titleError, setTitleError] = useState('');
+  const [userError, setUserError] = useState('');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,12 +26,12 @@ export const App = () => {
     let valid = true;
 
     if (title.trim() === '') {
-      setTitleError(true);
+      setTitleError('Please enter a title');
       valid = false;
     }
 
     if (!userId || userId === 0) {
-      setUserError(true);
+      setUserError('Please choose a user');
       valid = false;
     }
 
@@ -45,26 +44,26 @@ export const App = () => {
       title,
       completed: false,
       userId,
-      users: users.find(user => user.id === userId)!,
+      user: users.find(user => user.id === userId)!,
     };
 
     setTodosState(prev => [...prev, newTodo]);
     setTitle('');
     setUserId(0);
-    setTitleError(false);
-    setUserError(false);
+    setTitleError('');
+    setUserError('');
   };
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const clean = event.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
 
     setTitle(clean);
-    setTitleError(false);
+    setTitleError('');
   };
 
   const handleUserChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setUserId(Number(event.target.value));
-    setUserError(false);
+    setUserError('');
   };
 
   return (
