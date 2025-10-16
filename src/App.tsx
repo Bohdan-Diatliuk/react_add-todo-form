@@ -74,6 +74,7 @@ export const App = () => {
         <div className="field">
           <label htmlFor="titleInput">Title</label>
           <input
+            id="titleInput"
             type="text"
             data-cy="titleInput"
             value={title}
@@ -86,6 +87,7 @@ export const App = () => {
         <div className="field">
           <label htmlFor="userSelect">User</label>
           <select
+            id="userSelect"
             data-cy="userSelect"
             value={userId}
             onChange={handleUserChange}
