@@ -72,6 +72,7 @@ export const App = () => {
 
       <form action="/api/todos" method="POST" onSubmit={handleSubmit}>
         <div className="field">
+          <label htmlFor="titleInput">Title</label>
           <input
             type="text"
             data-cy="titleInput"
@@ -83,6 +84,7 @@ export const App = () => {
         </div>
 
         <div className="field">
+          <label htmlFor="userSelect">User</label>
           <select
             data-cy="userSelect"
             value={userId}
@@ -91,13 +93,12 @@ export const App = () => {
             <option value="0" disabled>
               Choose a user
             </option>
-            {usersFromServer.map(user => (
+            {users.map(user => (
               <option key={user.id} value={user.id}>
                 {user.name}
               </option>
             ))}
           </select>
-
           {userError && <span className="error">{userError}</span>}
         </div>
 
